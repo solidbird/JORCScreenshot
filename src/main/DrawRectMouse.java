@@ -50,7 +50,6 @@ public class DrawRectMouse extends JLabel{
        this.t = new Tesseract();
        this.t.setDatapath("C:\\Users\\Ich\\eclipse-workspace\\JOCRScreenshot\\tessdata");
        this.t.setPageSegMode(7);
-       this.t.setOcrEngineMode(1);
        
    }
    
