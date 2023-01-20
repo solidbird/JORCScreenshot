@@ -20,13 +20,19 @@ import javax.swing.JPanel;
 public class OCRScreenshot extends JFrame{
 	
 	DrawRectMouse rectMouse = null;
+	String path = OCRScreenshot.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "test.png";
 	
-	public OCRScreenshot() throws IOException, AWTException {
-		File f = new File("C:\\Users\\Ich\\eclipse-workspace\\JOCRScreenshot\\test.png");
+	public OCRScreenshot() {
+		File f = new File(this.path);
 		if(!f.exists()) {
-			f.createNewFile();
+			try {
+				f.createNewFile();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
-		
+				
 		this.setUndecorated(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -38,14 +44,23 @@ public class OCRScreenshot extends JFrame{
         	
         	Rectangle deviceRect = device.getDefaultConfiguration().getBounds();
         	if(deviceRect.contains(mouseLocation)) {
-        		new Screenshots("test.png", deviceRect);
-        		rectMouse = new DrawRectMouse(deviceRect, "C:\\Users\\Ich\\eclipse-workspace\\JOCRScreenshot\\test.png");
+        		try {
+					new Screenshots(this.path, deviceRect);
+				} catch (IOException | AWTException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+        		rectMouse = new DrawRectMouse(deviceRect, this.path);
         		
         		device.setFullScreenWindow(this);
         	} 
         }
         
+        
+        
         this.add(rectMouse);
+
+
         
         this.addKeyListener(new KeyListener() {
 			
