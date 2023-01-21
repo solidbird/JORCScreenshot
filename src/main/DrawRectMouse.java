@@ -17,6 +17,7 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import net.sourceforge.tess4j.ITesseract;
@@ -48,8 +49,18 @@ public class DrawRectMouse extends JLabel{
        this.addMouseMotionListener(mouseHandler);
        
        this.t = new Tesseract();
+       File f = new File("tessdata");
+       
+       if( !(f.exists() && f.isDirectory()) ) {
+    	   int option = JOptionPane.showConfirmDialog(this, "Tesseract requires training data. Please place the 'tessdata' folder in the same directory like this jar file.", "Error", JOptionPane.DEFAULT_OPTION);
+    	   if(option == JOptionPane.OK_OPTION) {
+    		   System.exit(0);
+    	   }
+       }
+       
+       this.t.setDatapath(f.getAbsolutePath());
+
        //this.t.setDatapath(DrawRectMouse.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "tessdata");
-       this.t.setDatapath("C:\\Users\\Ich\\eclipse-workspace\\JOCRScreenshot\\bin\\tessdata");
        //this.t.setPageSegMode(7);
        //this.t.setLanguage("deu");
        
